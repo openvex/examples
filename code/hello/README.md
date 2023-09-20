@@ -34,7 +34,7 @@ func main() {
 			Description: "Its really bad",
 		},
 		Products: []vex.Product{
-			vex.Product{
+			{
 				Component:     vex.Component{ID: "pkg:generic/1.0.0"},
 				Subcomponents: []vex.Subcomponent{},
 			},
