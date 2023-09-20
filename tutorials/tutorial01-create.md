@@ -20,17 +20,21 @@ That invocation of vexctl will produce the following document:
 
 ```json
 {
-  "@context": "https://openvex.dev/ns",
-  "@id": "https://openvex.dev/docs/public/vex-11aeb821bd5ca6f4fcbfce111897f81c5dcee6a781ea364e8e35be4443a1c517",
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://openvex.dev/docs/public/vex-091509fa4db8e7948456630cbccf3ebd957b648a16d471d78c84b43040f49a60",
   "author": "Unknown Author",
-  "role": "Document Creator",
-  "timestamp": "2023-01-19T01:34:03.27761931-06:00",
-  "version": "1",
+  "timestamp": "2023-09-20T11:42:12.074772+02:00",
+  "version": 1,
   "statements": [
     {
-      "vulnerability": "CVE-2014-123456",
+      "vulnerability": {
+        "name": "CVE-2014-123456"
+      },
+      "timestamp": "2023-09-20T11:42:12.07479+02:00",
       "products": [
-        "pkg:generic/product@1.0.0"
+        {
+          "@id": "pkg:generic/product@1.0.0"
+        }
       ],
       "status": "fixed"
     }

@@ -55,57 +55,71 @@ within the vexctl repo.
 Lets inspect the contents of the documents:
 
 ```console
-cat pkg/ctl/testdata/document2.vex.json
+vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 under_investigation | tee document1.vex.json
 ```
 
 ```json
 {
-    "id": "my-vexdoc",
-	"format": "text/vex+json",
-	"author": "John Doe",
-	"role": "vex issuer",	
-	"statements": [
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://openvex.dev/docs/public/vex-bf2d70a3a8f4cb887a0996e49977fa2529f2d93818d156f017cbbebb25642692",
+  "author": "Unknown Author",
+  "timestamp": "2023-09-20T11:46:28.949091+02:00",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-1234-5678"
+      },
+      "timestamp": "2023-09-20T11:46:28.949093+02:00",
+      "products": [
         {
-            "timestamp": "2022-12-22T16:36:43-05:00",
-            "products": ["pkg:apk/wolfi/bash@1.0.0"],
-            "vulnerability": "CVE-1234-5678",
-            "status": "under_investigation",
-            "status_notes": ""
+          "@id": "pkg:generic/product@1.0.0"
         }
-    ]
+      ],
+      "status": "under_investigation"
+    }
+  ]
 }
 ```
 
 And the second:
 
 ```console
-cat pkg/ctl/testdata/document2.vex.json
+vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 affected | tee document2.vex.json                                                                                                                   git:(main|✚2…1
 ```
 {
-    "id": "my-vexdoc",
-	"format": "text/vex+json",
-	"author": "John Doe",
-	"role": "vex issuer",	
-    "statements": [
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "https://openvex.dev/docs/public/vex-4af5963fd3ca9747c209da769700611c089ce7249be45cbd0fe1f4ed16679530",
+  "author": "Unknown Author",
+  "timestamp": "2023-09-20T11:48:20.870254+02:00",
+  "version": 1,
+  "statements": [
+    {
+      "vulnerability": {
+        "name": "CVE-1234-5678"
+      },
+      "timestamp": "2023-09-20T11:48:20.870256+02:00",
+      "products": [
         {
-            "timestamp": "2022-12-22T20:56:05-05:00",
-            "products": ["pkg:apk/wolfi/bash@1.0.0"],
-            "vulnerability": "CVE-1234-5678",
-            "status": "affected"
+          "@id": "pkg:generic/product@1.0.0"
         }
-    ]
+      ],
+      "status": "affected",
+      "action_statement": "No action statement provided",
+      "action_statement_timestamp": "2023-09-20T11:48:20.870256+02:00"
+    }
+  ]
 }
-
 ```
 
 As you can see, both documents containe one statement about the same product
-(pkg:apk/wolfi/bash@1.0.0) and vulnerability (CVE-1234-5678).
+(pkg:generic/product@1.0.0) and vulnerability (CVE-1234-5678).
 
 Let merge both documents and see what happens:
 
 ```console
-vexctl merge pkg/ctl/testdata/document1.vex.json \
-             pkg/ctl/testdata/document2.vex.json 
+vexctl merge document1.vex.json \
+             document2.vex.json
 
 ```
 
@@ -113,28 +127,37 @@ Running the command will make vexctl output the combined document to stdout:
 
 ```json
 {
-  "@context": "",
-  "@id": "merged-vex-67124ea942ef30e1f42f3f2bf405fbbc4f5a56e6e87684fc5cd957212fa3e025",
+  "@context": "https://openvex.dev/ns/v0.2.0",
+  "@id": "merged-vex-bd1900507c34eb17c532fb3fabd6904b48fe2a07cb0d6d3b734dbd8dd837dacb",
   "author": "Unknown Author",
-  "role": "Document Creator",
-  "timestamp": "2023-01-19T02:36:03.290252574-06:00",
-  "version": "",
+  "timestamp": "2023-09-20T11:49:15.587679+02:00",
+  "version": 1,
   "statements": [
     {
-      "vulnerability": "CVE-1234-5678",
-      "timestamp": "2022-12-22T16:36:43-05:00",
+      "vulnerability": {
+        "name": "CVE-1234-5678"
+      },
+      "timestamp": "2023-09-20T11:47:29.038232+02:00",
       "products": [
-        "pkg:apk/wolfi/bash@1.0.0"
+        {
+          "@id": "pkg:generic/product@1.0.0"
+        }
       ],
       "status": "under_investigation"
     },
     {
-      "vulnerability": "CVE-1234-5678",
-      "timestamp": "2022-12-22T20:56:05-05:00",
+      "vulnerability": {
+        "name": "CVE-1234-5678"
+      },
+      "timestamp": "2023-09-20T11:48:20.870256+02:00",
       "products": [
-        "pkg:apk/wolfi/bash@1.0.0"
+        {
+          "@id": "pkg:generic/product@1.0.0"
+        }
       ],
-      "status": "affected"
+      "status": "affected",
+      "action_statement": "No action statement provided",
+      "action_statement_timestamp": "2023-09-20T11:48:20.870256+02:00"
     }
   ]
 }
