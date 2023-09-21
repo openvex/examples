@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"github.com/openvex/go-vex/pkg/vex"
@@ -25,7 +26,7 @@ func main() {
 	doc.Statements = append(doc.Statements, vex.Statement{
 		Vulnerability: vex.Vulnerability{
 			ID:          "CVE-2014-123456",
-			Description: "Its really bad",
+			Description: "It's really bad",
 		},
 		Products: []vex.Product{
 			{
@@ -37,5 +38,8 @@ func main() {
 		StatusNotes: "It works now",
 	})
 
-	doc.ToJSON(os.Stdout)
+	err := doc.ToJSON(os.Stdout)
+	if err != nil {
+		log.Fatalf("Error writing JSON: %v", err)
+	}
 }

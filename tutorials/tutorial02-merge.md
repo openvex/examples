@@ -3,56 +3,55 @@
 VEX [documents](https://github.com/openvex/spec/blob/main/OPENVEX-SPEC.md#document-1)
 contain one or more [VEX statements](https://github.com/openvex/spec/blob/main/OPENVEX-SPEC.md#statement).
 
-VEX statetements are designed to be standalone. No matter if they are moved to
-another document, embedded or combined or split from equivalent statements their 
+VEX statements are designed to be standalone. No matter if they are moved to
+another document, embedded, combined or split from equivalent statements – their 
 message and meaning remains the same: How a vulnerability is known to affect a
 software product.
 
 ## Why Merge VEX Documents?
 
-The self sustaining nature of the statments makes merging documents possible.
+The self sustaining nature of the statements makes merging documents possible.
 There are a couple of reasons why we may want to merge documents.
 
 ### Combining many Documents
 
-VEX data describes the knowledge a vulnerability has over time. A VEX statement
-expresses the known exploitabilty at a point in time and can be overriden by 
+VEX data describes the knowledge a vulnerability has _over time_. A VEX statement
+expresses the known exploitability at a point in time and can be overridden by 
 new documents that capture the latest impact information.
 
 There can be more than one authoritative source of VEX information. The 
 consumer of the VEX documents will ultimately be the judge on who they trust
-whe it comes to reading VEX data. VEX documents can originate from a number
+when it comes to reading VEX data. VEX documents can originate from a number
 of issuers:
 
 - The software author
 - A distributor or repackager
-- An independent scurity researcher
+- An independent security researcher
 - An Auditor
 - The internal security team in an organization
 
 The VEX impact history can be assembled from multiple documents but sometimes
 having just one document may be preferred. 
 
-### Assembling a Product's Metadata out of Many Components'
+### Assembling a Product's Metadata out of Many Components
 
 Modern software products incorporate many components. Each of these components
 can be considered a "product" in the VEX sense. Authors and other people may be
-issuing VEX Statements about them. In order to generate a VEX document of 
-a product with many components, we may need to pull into the document all known
-information its components. 
+issuing VEX Statements about them. To generate a VEX document for a product with
+multiple components, it may be necessary to aggregate all known information
+ about these subcomponents into a single document.
 
 Instead of providing many individual VEX documents, a software author may 
-combine all the known VEX data of their dependencies into a VEX document cataloguing
-known exploitability data. 
+combine all the known VEX data of their dependencies into a single VEX document,
+cataloging all known exploitability data. 
 
 ## Merging with `vexctl`
 
 To combine documents, `vexctl` has a `merge` subcommand. The invocation is 
 simple enough: when running it, simply pass all the documents you want to
-merge and it will combine lla documents into one. This example can be run 
-within the vexctl repo. 
+merge and it will combine all documents into one.
 
-Lets inspect the contents of the documents:
+Let's generate inspect the contents of some example documents:
 
 ```console
 vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 under_investigation | tee document1.vex.json
@@ -85,8 +84,10 @@ vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 under_investigation | te
 And the second:
 
 ```console
-vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 affected | tee document2.vex.json                                                                                                                   git:(main|✚2…1
+vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 affected | tee document2.vex.json 
 ```
+
+```json
 {
   "@context": "https://openvex.dev/ns/v0.2.0",
   "@id": "https://openvex.dev/docs/public/vex-4af5963fd3ca9747c209da769700611c089ce7249be45cbd0fe1f4ed16679530",
@@ -112,15 +113,14 @@ vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 affected | tee document2
 }
 ```
 
-As you can see, both documents containe one statement about the same product
+As you can see, both documents contain one statement about the same product
 (pkg:generic/product@1.0.0) and vulnerability (CVE-1234-5678).
 
-Let merge both documents and see what happens:
+Let's merge both documents and see what happens:
 
 ```console
 vexctl merge document1.vex.json \
              document2.vex.json
-
 ```
 
 Running the command will make vexctl output the combined document to stdout:
@@ -162,12 +162,12 @@ Running the command will make vexctl output the combined document to stdout:
   ]
 }
 ```
-Note that statements are sorted in the new document. This lets the human eye
-understand the evolution of the impact knwoledge.
+Note that statements are sorted in the new document. This lets the human eye to
+understand the evolution of the impact knowledge.
 
 ## Specifying what to Merge
 
-Merging documents can be done with a broad stroke, as in the example above, or
+Merging documents can be done with broad strokes, as in the example above, or
 with finer-grained control. There are two flags that let the user control what
 gets considered for the new document:
 

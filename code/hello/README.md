@@ -26,12 +26,12 @@ func main() {
 		},
 	}
 
-	/// Add a stetement to the document
+	/// Add a statement to the document
 
 	doc.Statements = append(doc.Statements, vex.Statement{
 		Vulnerability: vex.Vulnerability{
 			ID:          "CVE-2014-123456",
-			Description: "Its really bad",
+			Description: "It's really bad",
 		},
 		Products: []vex.Product{
 			{
@@ -63,7 +63,7 @@ The example code above will produce the following document:
     {
       "vulnerability": {
         "@id": "CVE-2014-123456",
-        "description": "Its really bad"
+        "description": "It's really bad"
       },
       "products": [
         {
