@@ -51,7 +51,7 @@ To combine documents, `vexctl` has a `merge` subcommand. The invocation is
 simple enough: when running it, simply pass all the documents you want to
 merge and it will combine all documents into one.
 
-Let's generate inspect the contents of some example documents:
+Let's generate some example documents:
 
 ```console
 vexctl create "pkg:generic/product@1.0.0" CVE-1234-5678 under_investigation | tee document1.vex.json

@@ -34,7 +34,7 @@ func main() {
 				Subcomponents: []vex.Subcomponent{},
 			},
 		},
-		Status:      "fixed",
+		Status:      vex.StatusFixed,
 		StatusNotes: "It works now",
 	})
 

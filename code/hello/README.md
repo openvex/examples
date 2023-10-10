@@ -20,7 +20,7 @@ func main() {
 			Context:    vex.Context,
 			Author:     "John Doe",
 			AuthorRole: "VEXing Engineer",
-			Version:    1.0,
+			Version:    1,
 			Tooling:    "hello/vex",
 			Supplier:   "You!",
 		},
@@ -39,7 +39,7 @@ func main() {
 				Subcomponents: []vex.Subcomponent{},
 			},
 		},
-		Status:      "fixed",
+		Status:      vex.StatusFixed,
 		StatusNotes: "It works now",
 	})
 
