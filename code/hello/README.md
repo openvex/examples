@@ -1,7 +1,7 @@
 # My First OpenVEX Program
 
 Using the OpenVEX library in go is relatively easy. You work with documents,
-add a few statements and render it into json. Here is a a shoret example:
+add a few statements and render it into json. Here is a a short example:
 
 ```golang
 package main
@@ -20,21 +20,27 @@ func main() {
 			Context:    vex.Context,
 			Author:     "John Doe",
 			AuthorRole: "VEXing Engineer",
-			Version:    "1.0",
+			Version:    1,
 			Tooling:    "hello/vex",
 			Supplier:   "You!",
 		},
 	}
 
-	/// Add a stetement to the document
+	/// Add a statement to the document
 
 	doc.Statements = append(doc.Statements, vex.Statement{
-		Vulnerability:   "CVE-2014-123456",
-		VulnDescription: "Its really bad",
-		Products:        []string{"pkg:generic/1.0.0"},
-		Subcomponents:   []string{},
-		Status:          "fixed",
-		StatusNotes:     "It works now",
+		Vulnerability: vex.Vulnerability{
+			ID:          "CVE-2014-123456",
+			Description: "It's really bad",
+		},
+		Products: []vex.Product{
+			{
+				Component:     vex.Component{ID: "pkg:generic/1.0.0"},
+				Subcomponents: []vex.Subcomponent{},
+			},
+		},
+		Status:      vex.StatusFixed,
+		StatusNotes: "It works now",
 	})
 
 	doc.ToJSON(os.Stdout)
@@ -49,16 +55,20 @@ The example code above will produce the following document:
   "@id": "https://openvex.dev/docs/public/my-first-vex",
   "author": "John Doe",
   "role": "VEXing Engineer",
-  "timestamp": "2023-01-09T09:08:42-06:00",
-  "version": "1.0",
+  "timestamp": null,
+  "version": 1,
   "tooling": "hello/vex",
   "supplier": "You!",
   "statements": [
     {
-      "vulnerability": "CVE-2014-123456",
-      "vuln_description": "Its really bad",
+      "vulnerability": {
+        "@id": "CVE-2014-123456",
+        "description": "It's really bad"
+      },
       "products": [
-        "pkg:generic/1.0.0"
+        {
+          "@id": "pkg:generic/1.0.0"
+        }
       ],
       "status": "fixed",
       "status_notes": "It works now"
@@ -68,5 +78,4 @@ The example code above will produce the following document:
 
 ```
 
-If you want to play around with this example, download the hello-vex.zip
-file from this directory.
+If you want to play around with this example, see the files in this directory.
